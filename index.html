@@ -85,13 +85,7 @@
     function main() {
 
         var url = 'http://agustinbenassi.cartodb.com/api/v2/viz/a02e7f6a-62b3-11e4-afe7-0e853d047bba/viz.json';
-        var options = {
-            zoom: 6,
-            scrollwheel: true,
-            title: false
-        };
-
-        cartodb.createVis('map', url, options)
+        cartodb.createVis('map', url)
             .done(function(vis, layers) {
                 // layer 0 is the base layer, layer 1 is cartodb layer
                 var subLayer = layers[1].getSubLayer(0);
