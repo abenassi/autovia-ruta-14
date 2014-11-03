@@ -75,7 +75,7 @@
           $options.removeClass('selected');
           $li.addClass('selected');
           // create query based on data from the layer
-          var css = "#ruta_14_joined{polygon-opacity: 0;line-color: #FFFFB2;  line-width: 10.5;  line-opacity: 1;} #ruta_14_joined [ " + p_anio + " <= 50000] {   line-color: #B10026;} #ruta_14_joined [ " + p_anio + " <= 24000] {   line-color: #E31A1C;} #ruta_14_joined [ " + p_anio + " <= 20000] {   line-color: #FC4E2A;} #ruta_14_joined [ " + p_anio + " <= 16000] {   line-color: #FD8D3C;} #ruta_14_joined [ " + p_anio + " <= 12000] {   line-color: #FEB24C;} #ruta_14_joined [ " + p_anio + " <= 8000] {   line-color: #FED976;} #ruta_14_joined [ " + p_anio + " <= 4000] {   line-color: #FFFFB2;}";
+          var css = "#ruta_14_transito{polygon-opacity: 0;line-color: #FFFFB2;  line-width: 10.5;  line-opacity: 1;} #ruta_14_transito [ " + p_anio + " <= 50000] {   line-color: #B10026;} #ruta_14_transito [ " + p_anio + " <= 24000] {   line-color: #E31A1C;} #ruta_14_transito [ " + p_anio + " <= 20000] {   line-color: #FC4E2A;} #ruta_14_transito [ " + p_anio + " <= 16000] {   line-color: #FD8D3C;} #ruta_14_transito [ " + p_anio + " <= 12000] {   line-color: #FEB24C;} #ruta_14_transito [ " + p_anio + " <= 8000] {   line-color: #FED976;} #ruta_14_transito [ " + p_anio + " <= 4000] {   line-color: #FFFFB2;}";
 
           // change the query in the layer to update the map
           layer.setCartoCSS(css);
