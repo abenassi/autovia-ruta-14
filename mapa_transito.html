@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Layer selector example | CartoDB.js</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <style>
+    html,
+    body,
+    #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    #layer_selector {
+        position: absolute;
+        top: 10%;
+        right: 20px;
+        padding: 0;
+        vertical-align: center;
+    }
+    #layer_selector ul {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+    #layer_selector li {
+        border-bottom: 1px solid #999;
+        padding: 15px 30px;
+        font-family: "Helvetica", Arial;
+        font-size: 13px;
+        color: #444;
+        cursor: auto;
+    }
+    #layer_selector li:hover {
+        background-color: #F0F0F0;
+        cursor: pointer;
+    }
+    #layer_selector li.selected {
+        background-color: #EEE;
+    }
+    </style>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="layer_selector" class="cartodb-infobox">
+        <ul>
+            <li data="p_total_13" class="selected">2013</li>
+            <li data="p_total_12">2012</li>
+            <li data="p_total_11">2011</li>
+            <li data="p_total_10">2010</li>
+            <li data="p_total_09">2009</li>
+            <li data="p_total_08">2008</li>
+            <li data="p_total_07">2007</li>
+            <li data="p_total_06">2006</li>
+        </ul>
+    </div>
+
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+
+    <script>
+    // create layer selector
+      function createSelector(layer) {
+        var $options = $('#layer_selector li');
+        $options.click(function(e) {
+          // get the area of the selected layer
+          var $li = $(e.target);
+          var p_anio = $li.attr('data');
+          // deselect all and select the clicked one
+          $options.removeClass('selected');
+          $li.addClass('selected');
+          // create query based on data from the layer
+          var css = "#ruta_14_transito{polygon-opacity: 0;line-color: #FFFFB2;  line-width: 10.5;  line-opacity: 1;} #ruta_14_transito [ " + p_anio + " <= 50000] {   line-color: #B10026;} #ruta_14_transito [ " + p_anio + " <= 24000] {   line-color: #E31A1C;} #ruta_14_transito [ " + p_anio + " <= 20000] {   line-color: #FC4E2A;} #ruta_14_transito [ " + p_anio + " <= 16000] {   line-color: #FD8D3C;} #ruta_14_transito [ " + p_anio + " <= 12000] {   line-color: #FEB24C;} #ruta_14_transito [ " + p_anio + " <= 8000] {   line-color: #FED976;} #ruta_14_transito [ " + p_anio + " <= 4000] {   line-color: #FFFFB2;}";
+
+          // change the query in the layer to update the map
+          layer.setCartoCSS(css);
+        });
+      }
+
+    function main() {
+
+        var url = 'http://agustinbenassi.cartodb.com/api/v2/viz/a02e7f6a-62b3-11e4-afe7-0e853d047bba/viz.json';
+        cartodb.createVis('map', url)
+            .done(function(vis, layers) {
+                // layer 0 is the base layer, layer 1 is cartodb layer
+                var subLayer = layers[1].getSubLayer(0);
+
+                createSelector(subLayer);
+            })
+            .error(function(err) {
+                console.log(err);
+            });
+    }
+
+    window.onload = main;
+    </script>
+</body>
+
+</html>

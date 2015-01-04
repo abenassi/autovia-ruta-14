@@ -1,105 +1,153 @@
-<!DOCTYPE html>
 <html>
 
 <head>
-    <title>Layer selector example | CartoDB.js</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
-    <style>
-    html,
-    body,
-    #map {
-        height: 100%;
-        padding: 0;
-        margin: 0;
-    }
-    #layer_selector {
-        position: absolute;
-        top: 10%;
-        right: 20px;
-        padding: 0;
-        vertical-align: center;
-    }
-    #layer_selector ul {
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-    }
-    #layer_selector li {
-        border-bottom: 1px solid #999;
-        padding: 15px 30px;
-        font-family: "Helvetica", Arial;
-        font-size: 13px;
-        color: #444;
-        cursor: auto;
-    }
-    #layer_selector li:hover {
-        background-color: #F0F0F0;
-        cursor: pointer;
-    }
-    #layer_selector li.selected {
-        background-color: #EEE;
-    }
-    </style>
 
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <!-- establece codificacion utf-8 y otras opciones -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- linkea con las hojas de estilo -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+
+    <!-- linkea con la hoja de javascript  -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- titulo del documento -->
+    <title>Autovía Ruta 14</title>
+
 </head>
 
+<!-- cuerpo del documento -->
+
 <body>
-    <div id="map"></div>
-    <div id="layer_selector" class="cartodb-infobox">
-        <ul>
-            <li data="p_total_13" class="selected">2013</li>
-            <li data="p_total_12">2012</li>
-            <li data="p_total_11">2011</li>
-            <li data="p_total_10">2010</li>
-            <li data="p_total_09">2009</li>
-            <li data="p_total_08">2008</li>
-            <li data="p_total_07">2007</li>
-            <li data="p_total_06">2006</li>
-        </ul>
+
+    <!-- barra de navegación principal -->
+    <div class="container">
+        ::before
+        <div class="bs-component">
+            <div class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse navbar-responsive-collapse">
+                    <ul class="nav navbar-nav">
+
+                        <!-- Inicio dropdown button -->
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inicio<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="./index.html#_Toc392849621">Sección 1</a>
+                                </li>
+                                <li><a href="./index.html#_Toc400361295">Sección 2</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Bases de datos dropdown button -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bases de datos<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Tránsito</a>
+                                </li>
+                                <li><a href="#">Accidentes</a>
+                                </li>
+                                <li><a href="#">Obras viales</a>
+                                </li>
+                                <li><a href="#">Patentamientos</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Visualizaciones dropdown button -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Visualizaciones<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="./mapa_transito.html">Mapa del tránsito</a>
+                                </li>
+                                <li><a href="#">Tableau 1</a>
+                                </li>
+                                <li><a href="#">Tableau 2</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <!-- FIN barra de navegación principal -->
 
-    <!-- include cartodb.js library -->
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    ::after
 
-    <script>
-    // create layer selector
-      function createSelector(layer) {
-        var $options = $('#layer_selector li');
-        $options.click(function(e) {
-          // get the area of the selected layer
-          var $li = $(e.target);
-          var p_anio = $li.attr('data');
-          // deselect all and select the clicked one
-          $options.removeClass('selected');
-          $li.addClass('selected');
-          // create query based on data from the layer
-          var css = "#ruta_14_transito{polygon-opacity: 0;line-color: #FFFFB2;  line-width: 10.5;  line-opacity: 1;} #ruta_14_transito [ " + p_anio + " <= 50000] {   line-color: #B10026;} #ruta_14_transito [ " + p_anio + " <= 24000] {   line-color: #E31A1C;} #ruta_14_transito [ " + p_anio + " <= 20000] {   line-color: #FC4E2A;} #ruta_14_transito [ " + p_anio + " <= 16000] {   line-color: #FD8D3C;} #ruta_14_transito [ " + p_anio + " <= 12000] {   line-color: #FEB24C;} #ruta_14_transito [ " + p_anio + " <= 8000] {   line-color: #FED976;} #ruta_14_transito [ " + p_anio + " <= 4000] {   line-color: #FFFFB2;}";
+    <!-- barra de navegación side -->
+    <!-- <ul id="sidebar" class="nav nav-pills nav-stacked">
+        <li class="panel panel-default active"><a href="#">Inicio</a>
+        </li>
+        <li class="panel panel-default"><a href="#_Toc392849621">Índice</a>
+        </li>
+        <li class="panel panel-default"><a href="#_Toc400361295">Índice de figuras</a>
+        </li>
+        <li class="panel panel-default"><a href="#_Toc400361296">Índice de tablas</a>
+        </li>
+        <li class="panel panel-default"><a href="#_Toc400361297">Prólogo</a>
+        </li>
+        <li class="panel panel-default"><a href="#_Toc400361298">Resumen</a>
+        </li>
+    </ul> -->
+    <!-- FIN barra de navegación side -->
 
-          // change the query in the layer to update the map
-          layer.setCartoCSS(css);
-        });
-      }
+    <!-- Barra de navegación right-side -->
+<!--     <ul id="help" class="nav nav-pills nav-stacked">
+        <li class="panel panel-default"><a href="./ayuda.html">Cómo leer este documento</a>
+        </li>
+        <li class="panel panel-default"><a href="./contacto.html">Contacto</a>
+        </li>
+    </ul> -->
+    <!-- FIN barra de navegación right-side -->
 
-    function main() {
+    <!-- comienzo del documento -->
+    <div id="documento">
 
-        var url = 'http://agustinbenassi.cartodb.com/api/v2/viz/a02e7f6a-62b3-11e4-afe7-0e853d047bba/viz.json';
-        cartodb.createVis('map', url)
-            .done(function(vis, layers) {
-                // layer 0 is the base layer, layer 1 is cartodb layer
-                var subLayer = layers[1].getSubLayer(0);
+        <p id="titulo">Autovía Ruta 14</p>
+        <br>
+        <br>
+        <br>
 
-                createSelector(subLayer);
-            })
-            .error(function(err) {
-                console.log(err);
-            });
-    }
+        <div id="autoria">
+            <p id="autores"><b>(Sitio en construcción)</b>
+            </p>
+        </div>
 
-    window.onload = main;
-    </script>
+    </div>
+    <!-- FIN del documento -->
+
+    <!-- barra de navegación al final del documento -->
+    <br>
+    <div class="btn-group btn-group-justified">
+
+        <a href="http://www.blogdelcespa.blogspot.com.ar/#!http://blogdelcespa.blogspot.com/p/documentos-de-trabajo.html" class="btn btn-default">
+            <strong>Volver</strong>
+        </a>
+
+        <a href="parte1.html" class="btn btn-default">
+            <strong>Siguiente</strong>
+        </a>
+    </div>
+    <!-- FIN barra de navegación al final del documento -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
