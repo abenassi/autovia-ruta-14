@@ -112,13 +112,36 @@ h1:after, h2:after, h3:after {
     height: 50px;
     visibility: hidden;
 }
+#wrapper {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
 img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding: 10px 30px 30px 30px;
+
+    padding: 20px;
     max-width: 100%;
     max-height: 500px;
+}
+img.left{
+  float: left;
+    /*display: inline;*/
+    width: 50%;
+
+}
+img.right{
+  float: left;
+    /*display: inline;*/
+    /*margin-right: 0;*/
+    width: 50%;
+}
+img.third{
+  float: left;
+    width: 33%;
 }
 #sidebar {
     width: 170px;
@@ -1152,7 +1175,7 @@ html {
 }
 body {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1.42857143;
   color: #3e3f3a;
   background-color: #ffffff;
